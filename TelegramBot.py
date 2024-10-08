@@ -53,14 +53,13 @@ def help_read(message):
         if bible_ver is None:
             return None, "Sorry, we couldn't find the verse. Please check the reference and try again."
         else:
-            # Use gTTS to generate the audio file
             audio_file = 'audio.mp3'
             tts = gTTS(text=bible_ver, lang='en')
             tts.save(audio_file)
-            return bible_ver, audio_file  # Return both text and audio file
+            return bible_ver, audio_file
     else:
         bible_ver = get_bible_verse(text)
-        return bible_ver, None  # Return only text if no voice keyword
+        return bible_ver, None
 
 
 def s_word(message):
@@ -105,10 +104,8 @@ def audio_verse_reply(message):
         bot.reply_to(message, "Sorry, we couldn't find the verse. Please check the reference and try again.")
         return
 
-    # Send the text of the Bible verse
     bot.reply_to(message, bible_text)
 
-    # Send audio if it's available
     if voice_file and Path(voice_file).is_file():
         with open(voice_file, 'rb') as voice_note:
             bot.send_voice(message.chat.id, voice_note)
